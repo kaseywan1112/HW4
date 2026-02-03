@@ -12,20 +12,19 @@ public class ScoreUI : MonoBehaviour
     {
         scoreText = GetComponent<TextMeshProUGUI>();
     }
-    private void OnEnable()
-    {
-        ScoreManager.instance.OnScoreChanged += UpdateScoreText;
-    }
-    private void OnDisable()
-    {
-        ScoreManager.instance.OnScoreChanged -= UpdateScoreText;
-    }
 
     void Start()
     {
-       UpdateScoreText(ScoreManager.instance.score);
+        ScoreManager.instance.OnScoreChanged += UpdateScoreText;
+        UpdateScoreText(ScoreManager.instance.score);
     }
-
+    private void OnDestroy()
+    {
+        if (ScoreManager.instance != null)
+        {
+            ScoreManager.instance.OnScoreChanged -= UpdateScoreText;
+        }
+    }
     // Update is called once per frame
     void UpdateScoreText(int newScore)
     {

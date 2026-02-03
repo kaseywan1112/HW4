@@ -5,20 +5,20 @@ using UnityEngine;
 public class ScoreSFX : MonoBehaviour
 {
     // Start is called before the first frame update
-    private void OnEnable()
+    void Start()
     {
-        ScoreManager.instance.OnScoreChanged += PlayScoreSFX;
+        ScoreManager.instance.OnScoreChanged += PlayScoreSound;
     }
 
-    private void OnDisable()
+    void OnDestroy()
     {
-        ScoreManager.instance.OnScoreChanged -= PlayScoreSFX;
+        if (ScoreManager.instance != null)
+            ScoreManager.instance.OnScoreChanged -= PlayScoreSound;
     }
 
-    void PlayScoreSFX(int newScore)
+    void PlayScoreSound(int newScore)
     {
         AudioManager.instance.PlayScoreSound();
-
     }
 }
 
